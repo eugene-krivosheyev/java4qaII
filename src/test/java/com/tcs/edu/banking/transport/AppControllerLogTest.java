@@ -4,6 +4,7 @@ import com.tcs.edu.banking.AppController;
 import com.tcs.edu.banking.account.persist.InmemoryAccountRepository;
 import com.tcs.edu.banking.account.service.AccountService;
 import com.tcs.edu.banking.account.service.ReportingService;
+import com.tcs.edu.banking.error.ProcessingException;
 import com.tcs.edu.banking.transport.domain.RoundFormatMessage;
 import com.tcs.edu.banking.transport.domain.Severity;
 import com.tcs.edu.banking.transport.domain.SquareFormatMessage;
@@ -20,8 +21,14 @@ import java.nio.file.Paths;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AppControllerTest {
-    private final Path path = Paths.get("target/test.txt");
+/**
+ * @see java.nio.file.Paths#get
+ * @see org.junit.jupiter.api.BeforeEach
+ * @see java.nio.file.Files#deleteIfExists
+ * @see java.nio.file.Files#readString
+ */
+public class AppControllerLogTest {
+    private final Path path = Paths.get("target/log.txt");
     private final InmemoryAccountRepository accounts = new InmemoryAccountRepository();
     private final AppController appController = new AppController(
             new FileMessageRepository(path),
@@ -32,26 +39,26 @@ public class AppControllerTest {
 
     @BeforeEach
     public void tearDown() throws IOException {
-        path.toFile().delete();
+        Files.deleteIfExists(path);
     }
 
     @Test
-    public void shouldLogMessageWhenSquareFormat() throws IOException {
-        appController.process(new SquareFormatMessage("square", Severity.INFO));
+    public void shouldLogInfoMessageWhenSquareFormat() throws IOException, ProcessingException {
+        appController.process(new SquareFormatMessage("REPORT", Severity.INFO));
 
         assertThat(Files.readString(path))
                 .contains("0")
                 .contains("[INFO]")
-                .contains("square");
+                .contains("REPORT");
     }
 
     @Test
-    public void shouldLogMessageWhenRoundFormat() throws IOException {
-        appController.process(new RoundFormatMessage("round", Severity.INFO));
+    public void shouldLogInfoMessageWhenRoundFormat() throws IOException, ProcessingException {
+        appController.process(new RoundFormatMessage("REPORT", Severity.INFO));
 
         assertThat(Files.readString(path))
                 .contains("0")
                 .contains("(INFO)")
-                .contains("round");
+                .contains("REPORT");
     }
 }

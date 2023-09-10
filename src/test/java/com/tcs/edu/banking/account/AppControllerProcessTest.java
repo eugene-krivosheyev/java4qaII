@@ -18,6 +18,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,13 +28,14 @@ import static org.assertj.core.api.Assertions.assertThat;
  * для операций используется только публичный API AppController
  */
 public class AppControllerProcessTest {
+    private final AtomicInteger counter = new AtomicInteger();
     //region fixture
     private final Path path = Paths.get("target/log.txt");
     private final InmemoryAccountRepository accounts = new InmemoryAccountRepository();
     private final AppController appController = new AppController(
             new FileMessageRepository(path),
-            new NumberedDecorator(),
-            new TimestampDecorator(),
+            (String body) -> String.format("%d %s", counter.incrementAndGet(), body),
+            (String body) -> String.format("%s %s", LocalDateTime.now(), body),
             new AccountService(accounts),
             new ReportingService(accounts));
     //endregion

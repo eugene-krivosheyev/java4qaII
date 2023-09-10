@@ -21,6 +21,10 @@ import java.nio.file.Paths;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Системные тесты:
+ * для операций используется только публичный API AppController
+ */
 public class AppControllerProcessTest {
     //region fixture
     private final Path path = Paths.get("target/log.txt");

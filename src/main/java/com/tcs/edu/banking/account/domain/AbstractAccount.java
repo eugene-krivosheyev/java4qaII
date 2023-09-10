@@ -1,5 +1,11 @@
 package com.tcs.edu.banking.account.domain;
 
+/**
+ * Инкапсулирует:
+ * - id: идентификатор счета
+ * - amount: состояние счета
+ * - общую для счетов всех типов реализацию: мутабельное свойство id, чтение состояния, снятия и зачисления средств.
+ */
 public abstract class AbstractAccount implements Account {
     private int id;
     private double amount;

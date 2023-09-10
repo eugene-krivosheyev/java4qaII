@@ -15,6 +15,9 @@ import java.nio.file.StandardOpenOption;
 public class FileMessageRepository {
     private final Path path;
 
+    /**
+     * @param path настройка: путь к файлу с историей
+     */
     public FileMessageRepository(Path path) {
         this.path = path;
     }

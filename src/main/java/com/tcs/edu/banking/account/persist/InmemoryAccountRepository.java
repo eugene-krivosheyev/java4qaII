@@ -6,6 +6,14 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Простейшая in-memory реализация.
+ * @see java.util.Map
+ * @see java.util.HashMap
+ * @see java.util.Map#put
+ * @see java.util.Map#get
+ * @see java.util.Map#values
+ */
 public class InmemoryAccountRepository implements AccountRepository {
     private int idSequence;
     private final Map<Integer, Account> accounts = new HashMap<>();

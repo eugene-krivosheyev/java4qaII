@@ -11,6 +11,9 @@ public class ReportingService {
         this.accountRepository = accountRepository;
     }
 
+    /**
+     * @return report according Requirements.
+     */
     public String generate() {
         var report = new StringBuilder();
         for (Account account : accountRepository.findAll()) {

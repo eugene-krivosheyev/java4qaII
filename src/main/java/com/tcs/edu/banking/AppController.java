@@ -7,31 +7,29 @@ import com.tcs.edu.banking.account.service.ReportingService;
 import com.tcs.edu.banking.error.ProcessingException;
 import com.tcs.edu.banking.transport.domain.Message;
 import com.tcs.edu.banking.transport.persist.FileMessageRepository;
-import com.tcs.edu.banking.transport.service.NumberedDecorator;
-import com.tcs.edu.banking.transport.service.TimestampDecorator;
+import com.tcs.edu.banking.transport.service.MessageDecorator;
 
-import java.io.IOException;
 import java.util.Objects;
 
 /**
  * Ответственности:
+ * - [x] точка входа приложения: афиширует методы публичного API всей системы
+ * - [x] инкапсулирует общий алгоритм обработки входящих команд
+ * - [x] валидация данных входящих команд
+ * - [x] журналирование входящих команд
  * в этом релизе:
- * - [!] точка входа приложения: афиширует методы публичного API всей системы
- * - [!] инкапсулирует общий алгоритм обработки входящих команд
- * - [!] валидация данных входящих команд
- * - [!] журналирование входящих команд
- * в будущих релизах:
  * - [ ] парсинг входящих команд и их параметров
+ * в будущих релизах:
  * - [ ] диспетчеризация: вызов нужной логики обработки команды
  */
 public class AppController {
     private final FileMessageRepository messageRepository;
-    private final NumberedDecorator numberDecorator;
-    private final TimestampDecorator timestampDecorator;
+    private final MessageDecorator numberDecorator;
+    private final MessageDecorator timestampDecorator;
     private final AccountService accountService;
     private final ReportingService reportingService;
 
-    public AppController(FileMessageRepository messageRepository, NumberedDecorator numberDecorator, TimestampDecorator timestampDecorator, AccountService accountService, ReportingService reportingService) {
+    public AppController(FileMessageRepository messageRepository, MessageDecorator numberDecorator, MessageDecorator timestampDecorator, AccountService accountService, ReportingService reportingService) {
         this.messageRepository = messageRepository;
         this.numberDecorator = numberDecorator;
         this.timestampDecorator = timestampDecorator;
@@ -45,7 +43,12 @@ public class AppController {
      * @return Строковый результат обработки входящей команды.
      * @throws com.tcs.edu.banking.error.ProcessingException в случае ошибки обработки команды. Инкапсулирует ошибку-причину.
      * @throws java.lang.IllegalArgumentException в случае невалидной входящей команды: команда == null, тело == null, значимость == null, команда не соответствует ни одной допустимой структуре
-     * @see java.util.Objects#isNull 
+     * @see java.util.Objects#isNull
+     * @see java.lang.String#startsWith
+     * @see java.lang.String#substring
+     * @see java.lang.String#length
+     * @see java.lang.String#split
+     * @see java.lang.String#valueOf
      */
     public String process(Message message) throws ProcessingException {
         //region Pre Conditions

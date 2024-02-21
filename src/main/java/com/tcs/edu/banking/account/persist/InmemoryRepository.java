@@ -14,18 +14,14 @@ import java.util.Map;
  * @see java.util.Map#get
  * @see java.util.Map#values
  */
-public class InmemoryAccountRepository implements AccountRepository {
-    private int idSequence;
-    private final Map<Integer, Account> accounts = new HashMap<>();
+public class InmemoryRepository<T ext ? | , K> implements Repository<T,K> {
+    private K idSequence;
+    private final Map<K, T> accounts = new HashMap<>();
 
     @Override
-    public int create(Account account) {
-        final var id = ++idSequence;
-
-        account.setId(id);
-        save(account);
-
-        return id;
+    public K create(T value) {
+        save(value);
+        return null;
     }
 
     @Override

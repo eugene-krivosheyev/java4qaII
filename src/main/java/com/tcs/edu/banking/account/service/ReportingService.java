@@ -2,12 +2,12 @@ package com.tcs.edu.banking.account.service;
 
 import com.tcs.edu.banking.account.domain.Account;
 import com.tcs.edu.banking.account.domain.CreditAccount;
-import com.tcs.edu.banking.account.persist.AccountRepository;
+import com.tcs.edu.banking.account.persist.Repository;
 
 public class ReportingService {
-    private final AccountRepository accountRepository;
+    private final Repository accountRepository;
 
-    public ReportingService(AccountRepository accountRepository) {
+    public ReportingService(Repository accountRepository) {
         this.accountRepository = accountRepository;
     }
 

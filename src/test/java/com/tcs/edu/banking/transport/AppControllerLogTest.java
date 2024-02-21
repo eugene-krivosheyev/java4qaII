@@ -1,7 +1,7 @@
 package com.tcs.edu.banking.transport;
 
 import com.tcs.edu.banking.AppController;
-import com.tcs.edu.banking.account.persist.InmemoryAccountRepository;
+import com.tcs.edu.banking.account.persist.InmemoryRepository;
 import com.tcs.edu.banking.account.service.AccountService;
 import com.tcs.edu.banking.account.service.ReportingService;
 import com.tcs.edu.banking.error.ProcessingException;
@@ -29,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class AppControllerLogTest {
     private final Path path = Paths.get("target/log.txt");
-    private final InmemoryAccountRepository accounts = new InmemoryAccountRepository();
+    private final InmemoryRepository accounts = new InmemoryRepository();
     private final AppController appController = new AppController(
             new FileMessageRepository(path),
             new NumberedDecorator(),

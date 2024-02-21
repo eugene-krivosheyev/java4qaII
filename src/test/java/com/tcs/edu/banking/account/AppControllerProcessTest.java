@@ -1,7 +1,7 @@
 package com.tcs.edu.banking.account;
 
 import com.tcs.edu.banking.AppController;
-import com.tcs.edu.banking.account.persist.InmemoryAccountRepository;
+import com.tcs.edu.banking.account.persist.InmemoryRepository;
 import com.tcs.edu.banking.account.service.AccountService;
 import com.tcs.edu.banking.account.service.ReportingService;
 import com.tcs.edu.banking.error.ProcessingException;
@@ -9,13 +9,10 @@ import com.tcs.edu.banking.transport.domain.RoundFormatMessage;
 import com.tcs.edu.banking.transport.domain.Severity;
 import com.tcs.edu.banking.transport.domain.SquareFormatMessage;
 import com.tcs.edu.banking.transport.persist.FileMessageRepository;
-import com.tcs.edu.banking.transport.service.NumberedDecorator;
-import com.tcs.edu.banking.transport.service.TimestampDecorator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
@@ -31,7 +28,7 @@ public class AppControllerProcessTest {
     private final AtomicInteger counter = new AtomicInteger();
     //region fixture
     private final Path path = Paths.get("target/log.txt");
-    private final InmemoryAccountRepository accounts = new InmemoryAccountRepository();
+    private final InmemoryRepository accounts = new InmemoryRepository();
     private final AppController appController = new AppController(
             new FileMessageRepository(path),
             (String body) -> String.format("%d %s", counter.incrementAndGet(), body),

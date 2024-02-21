@@ -1,13 +1,13 @@
 package com.tcs.edu.banking.account.service;
 
 import com.tcs.edu.banking.account.domain.Account;
-import com.tcs.edu.banking.account.persist.AccountRepository;
+import com.tcs.edu.banking.account.persist.Repository;
 import com.tcs.edu.banking.error.ProcessingException;
 
 public class AccountService {
-    private final AccountRepository accounts;
+    private final Repository accounts;
 
-    public AccountService(AccountRepository accounts) {
+    public AccountService(Repository accounts) {
         this.accounts = accounts;
     }
 
